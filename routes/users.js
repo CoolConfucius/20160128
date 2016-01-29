@@ -8,7 +8,7 @@ var authMiddleware = require('../config/auth');
 
 var User = require('../models/user');
 
-var ref = new Firebase('https://<NOT-CADES-FIREBASE>.firebaseio.com/');
+var ref = new Firebase('https://20160128.firebaseio.com/');
 
 router.post('/register', function(req, res, next) {
   ref.createUser(req.body, function(err, userData) {
@@ -32,7 +32,8 @@ router.post('/login', function(req, res, next) {
 router.get('/profile', authMiddleware, function(req, res) {
   //// logged in,   req.user
   User.findById(req.user._id, function(err, user) {
-    res.send(user);
+    // res.send(user);
+    res.render('profile', { useruid: user.uid, user_id: user._id, pokemon: user.pokemon})
   });
 });
 
